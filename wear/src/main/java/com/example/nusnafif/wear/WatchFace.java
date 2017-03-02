@@ -104,11 +104,11 @@ public class WatchFace extends CanvasWatchFaceService {
         boolean mRegisteredTimeZoneReceiver = false;
         
         // DataMap
-        private static final String KEY_HIGH_TEMP = "max_temp";
-        private static final String KEY_LOW_TEMP = "min_temp";
-        private static final String KEY_WEATHER_ID = "weather_id";
-        private static final String KEY_PATH = "/wearable";
-        private static final String KEY_TIME = "current_time";
+        private static final String HIGH_TEMP = "max_temp";
+        private static final String LOW_TEMP = "min_temp";
+        private static final String WEATHER_ID = "weather_id";
+        private static final String PATH = "/wearable";
+        private static final String CURRENT_TIME = "current_time";
 
         private GoogleApiClient googleApiClient;
 
@@ -255,7 +255,7 @@ public class WatchFace extends CanvasWatchFaceService {
                             for (Node node : nodes) {
                                 Wearable.MessageApi.sendMessage(googleApiClient
                                         , node.getId()
-                                        , KEY_PATH
+                                        , PATH
                                         , new byte[0]).setResultCallback(
                                         new ResultCallback<MessageApi.SendMessageResult>() {
                                             @Override
@@ -529,12 +529,12 @@ public class WatchFace extends CanvasWatchFaceService {
         }
 
         public void processItem(DataItem dataItem) {
-            if(KEY_PATH.equals(dataItem.getUri().getPath())){
+            if(PATH.equals(dataItem.getUri().getPath())){
                 DataMap map = DataMapItem.fromDataItem(dataItem).getDataMap();
-                mMaxTemperature = map.getString(KEY_HIGH_TEMP);
-                mMinTemperature = map.getString(KEY_LOW_TEMP);
-                mWeatherId = map.getInt(KEY_WEATHER_ID);
-                mTimeStamp = map.getLong(KEY_TIME);
+                mMaxTemperature = map.getString(HIGH_TEMP);
+                mMinTemperature = map.getString(LOW_TEMP);
+                mWeatherId = map.getInt(WEATHER_ID);
+                mTimeStamp = map.getLong(CURRENT_TIME);
 
                 Log.d(LOG_TAG, "Here is high temperature - " + mMaxTemperature);
                 Log.d(LOG_TAG, "Here is low temperature - " + mMinTemperature);
